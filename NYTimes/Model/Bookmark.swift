@@ -13,12 +13,6 @@ import Foundation
     var article:Article
     var index: Int16
     
-     init(from cdBookmark:CDBookmarks) {
-        self.id = cdBookmark.id!
-        self.article = cdBookmark.article!
-        self.index = cdBookmark.index
-    }
-    
      init(id: UUID = UUID(), article: Article, index: Int16) {
         self.id = id
         self.article = article

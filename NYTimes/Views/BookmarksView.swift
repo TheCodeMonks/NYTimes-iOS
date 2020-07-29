@@ -7,25 +7,37 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct BookmarksView: View {
     
-    let bookmarksViewModel = BookmarksViewModel(repository: PlaceholderBookmarksRepository())
+    @Environment(\.managedObjectContext) var managedObjectContext
     
+    @FetchRequest(entity: CDArticle.entity(), sortDescriptors: [], predicate: nil, animation: Animation.linear)
+    var savedArticles:FetchedResults<CDArticle>
     
+    @ViewBuilder
     var body: some View {
-        List{
-            ForEach(0..<10) { index in
-                NavigationLink(destination: Text("LOL")){
-                    NewsFeedView()
+        if savedArticles.count > 0 {
+            List{
+                ForEach(savedArticles,id:\.id) { savedArticle in
+                    NavigationLink(destination: WebViewHolder(url: URL(string: savedArticle.url)!, article: Article(from: savedArticle))){
+                        NewsFeedView(article: Article(from: savedArticle ))
+                    }
                 }
+                .onDelete(perform: deleteBookmark(at:))
+                .onMove(perform: moveBookmarks(from:to:))
             }
-            .onDelete(perform: deleteBookmark(at:))
-            .onMove(perform: moveBookmarks(from:to:))
+            .listStyle(PlainListStyle())
+            .navigationBarItems(trailing: EditButton())
+            .navigationBarTitle("Bookmarks", displayMode: .automatic)
+        }else{
+            Text("No Bookmarks Added yet")
+                .font(.system(size: 22, weight: Font.Weight.semibold, design: .rounded))
+                .navigationBarTitle("Bookmarks", displayMode: .automatic)
         }
-        .listStyle(PlainListStyle())
-        .navigationBarItems(trailing: EditButton())
-        .navigationBarTitle("Bookmarks", displayMode: .automatic)
+        
+        
     }
     
     func moveBookmarks(from source:IndexSet, to destination:Int){
@@ -33,7 +45,10 @@ struct BookmarksView: View {
     }
     
     func deleteBookmark(at offsets:IndexSet){
-        print("Delete bookmark")
+        for index in offsets {
+            managedObjectContext.delete(savedArticles[index])
+        }
+        try? managedObjectContext.save()
     }
 }
 

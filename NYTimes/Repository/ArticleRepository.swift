@@ -1,5 +1,5 @@
 //
-//  NewsFeedViewModel.swift
+//  ArticleRepository.swift
 //  NYTimes
 //
 //  Created by Waseem Akram on 29/07/20.
@@ -8,3 +8,8 @@
 
 import Foundation
 
+class ArticleRepository {
+    
+    
+    
+}

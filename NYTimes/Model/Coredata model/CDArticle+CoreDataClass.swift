@@ -1,5 +1,5 @@
 //
-//  CDBookmarks+CoreDataClass.swift
+//  CDArticle+CoreDataClass.swift
 //  NYTimes
 //
 //  Created by Waseem Akram on 29/07/20.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(CDBookmarks)
-public class CDBookmarks: NSManagedObject {
+@objc(CDArticle)
+public class CDArticle: NSManagedObject {
 
 }
