@@ -16,6 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let vm = BookmarksViewModel(repository: PlaceholderBookmarksRepository())
+        print(vm.bookmarks)
+        print("======")
+        vm.get(index: 0) { (result) in
+            print("get: 0",result)
+        }
+        print("======")
+        vm.deleteBookmark(index: 0) { (success) in
+            print("delete: 0",success)
+        }
+        print("======")
+        vm.get(index: 0) { (result) in
+            print("get: 0",result)
+        }
         return true
     }
 

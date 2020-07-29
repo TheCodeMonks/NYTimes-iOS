@@ -8,11 +8,20 @@
 
 import Foundation
 
-struct Bookmark {
+ struct Bookmark {
     var id: UUID
-    var url: String
-    var title: String
-    var subtitle: String
-    var author: String
+    var article:Article
     var index: Int16
+    
+     init(from cdBookmark:CDBookmarks) {
+        self.id = cdBookmark.id!
+        self.article = cdBookmark.article!
+        self.index = cdBookmark.index
+    }
+    
+     init(id: UUID = UUID(), article: Article, index: Int16) {
+        self.id = id
+        self.article = article
+        self.index = index
+    }
 }

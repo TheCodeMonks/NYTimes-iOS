@@ -9,23 +9,19 @@
 import SwiftUI
 
 struct BookmarksView: View {
+    
+    let bookmarksViewModel = BookmarksViewModel(repository: PlaceholderBookmarksRepository())
+    
+    
     var body: some View {
         List{
             ForEach(0..<10) { index in
                 NavigationLink(destination: Text("LOL")){
                     NewsFeedView()
-                        .contextMenu(menuItems: {
-                            Button(action: {
-                                self.deleteBookmark(at: IndexSet(arrayLiteral: index))
-                            }) {
-                                Text("Delete Bookmark")
-                                Image(uiImage:UIImage(systemName:"delete.left")!)
-                            }
-                        })
                 }
             }
             .onDelete(perform: deleteBookmark(at:))
-        .onMove(perform: moveBookmarks(from:to:))
+            .onMove(perform: moveBookmarks(from:to:))
         }
         .listStyle(PlainListStyle())
         .navigationBarItems(trailing: EditButton())

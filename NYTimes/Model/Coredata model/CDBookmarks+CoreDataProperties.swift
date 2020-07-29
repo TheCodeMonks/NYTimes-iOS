@@ -18,10 +18,7 @@ extension CDBookmarks {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var url: String?
-    @NSManaged public var title: String?
-    @NSManaged public var subtitle: String?
-    @NSManaged public var author: String?
     @NSManaged public var index: Int16
+    @NSManaged public var article: Article?
 
 }

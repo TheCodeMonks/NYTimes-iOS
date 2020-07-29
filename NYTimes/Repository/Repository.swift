@@ -8,11 +8,12 @@
 
 import Foundation
 
-protocol Repository {
+protocol Repository:class {
+ 
     associatedtype T
 
     func upsert(data:T) -> Bool
-    func get(id:UUID) -> T
+    func get(id:UUID) -> T?
     func getAll() -> [T]
     func delete(id:UUID) -> Bool
     func deleteAll() -> Bool

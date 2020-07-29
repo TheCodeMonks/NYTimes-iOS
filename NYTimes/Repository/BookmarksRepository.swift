@@ -7,30 +7,63 @@
 //
 
 import Foundation
+import CoreData
 
+ protocol BookmarksRepository {
+        
+    func upsert(article:Article) -> Bool
+    func get(index:Int16) -> Bookmark?
+    func getAll() -> [Bookmark]
+    func delete(index:Int16) -> Bool
+    func deleteAll() -> Bool
+    func swapIndex(source:Int16,destination:Int16)
+    func getBookmarksCount() -> Int
+    func updateOtherBookmarksIndex(after:Int16)
 
-class BookmarksRepository:Repository {
+}
+
+class BookmarksDataRepository:BookmarksRepository {
     
-    typealias T = Bookmark
-    
-    func upsert(data: Bookmark) -> Bool {
+     func upsert(article: Article) -> Bool {
         return true
     }
     
-    func get(id: UUID) -> Bookmark {
-        return Bookmark(id: UUID(), url: "", title: "", subtitle: "", author: "", index: 0)
+     func get(index: Int16) -> Bookmark? {
+        let fetchRequest = NSFetchRequest<CDBookmarks>(entityName: "CDBookmarks")
+        fetchRequest.predicate = NSPredicate(format: "index == %@", index as CVarArg)
+        do {
+            let result = try PersistenceManager.shared.context.fetch(fetchRequest).first
+            if let result = result {
+                return Bookmark(from: result)
+            }
+        }catch let error {
+            debugPrint(error.localizedDescription)
+        }
+        return nil
     }
     
-    func getAll() -> [Bookmark] {
+    
+     func getAll() -> [Bookmark] {
         return [Bookmark]()
     }
     
-    func delete(id: UUID) -> Bool {
+    func delete(index: Int16) -> Bool {
         return true
     }
     
-    func deleteAll() -> Bool {
+     func deleteAll() -> Bool {
         return true
+    }
+    
+     func swapIndex(source: Int16, destination: Int16) {
+        
+    }
+    
+    func getBookmarksCount() -> Int {
+        return 0 
+    }
+    
+    func updateOtherBookmarksIndex(after:Int16){
     }
     
 }
