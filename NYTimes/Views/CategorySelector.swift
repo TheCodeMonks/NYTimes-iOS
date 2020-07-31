@@ -11,8 +11,13 @@ import SwiftUI
 struct CategorySelector: View {
     
     var categories: [Category]
-    @Binding var selectedCategory: Int
-
+    var articleViewModel: ArticleViewModel
+    @State var selectedCategory: Int = 0 {
+        didSet {
+            print("selected Category: \(categories[selectedCategory])")
+            articleViewModel.loadArticles(for: categories[selectedCategory])
+        }
+    }
     
     var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
@@ -21,7 +26,7 @@ struct CategorySelector: View {
                         VStack{
                             Spacer()
                             HStack {
-                                Text(self.categories[index].name)
+                                Text(self.categories[index].rawValue)
                                     .foregroundColor(self.selectedCategory == index ? .white : .init(UIColor.label))
                                     .fontWeight(.medium)
                             }
@@ -33,6 +38,7 @@ struct CategorySelector: View {
                             .cornerRadius(10)
                             .onTapGesture {
                                 self.selectedCategory = index
+                                print(self.selectedCategory)
                         }
                     }.padding(.leading,8)
                 }
@@ -42,17 +48,19 @@ struct CategorySelector: View {
             .clipped()
             .shadow(radius: 15)
     }
-    
+        
 }
+
 
 
 struct CategorySelector_Previews: PreviewProvider {
     static var previews: some View {
         CategorySelector(categories: [
-            Category(name: "Science"),
-            Category(name: "Technology")
-            ],
-                         selectedCategory: .constant(0))
+            Category.science,
+            Category.tech,
+            Category.business
+        ], articleViewModel: ArticleViewModel(repository: ArticleRepository()),
+                         selectedCategory: 0)
             .previewDevice(.init("iPhone X"))
             
     }

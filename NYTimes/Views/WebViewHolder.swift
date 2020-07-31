@@ -85,6 +85,7 @@ struct WebViewHolder: View {
             let fetchRequest:NSFetchRequest<CDArticle> = CDArticle.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "url == %@", article.url)
             let results = try managedObjectContext.fetch(fetchRequest)
+            print(results)
             if let article = results.first {
                 managedObjectContext.delete(article)
                 try managedObjectContext.save()

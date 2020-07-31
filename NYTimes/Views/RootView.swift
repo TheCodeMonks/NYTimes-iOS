@@ -35,28 +35,35 @@ let articles = [
 
 struct RootView: View {
     
-    @State var categories:[Category] = [
-        Category(name: "Science"),
-        Category(name: "Technology")
-    ]
     
+    var categories:[Category] = Category.allCases
     
-    @State var selectedCategoryIndex:Int = 0
+    var initialCategory = 0
+    
+    @ObservedObject var articlesViewModel = ArticleViewModel(repository: ArticleRepository())
+    
     @State var shouldShowBookmarks = false
     
     var body: some View {
         NavigationView {
             VStack {
-                
                 NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {EmptyView()}
-                List(articles, id: \.id){ article in
-                    NavigationLink(destination: WebViewHolder(url: URL(string: article.url)!, article: article)){
-                        NewsFeedViewWithConfiguration(article: article)
+                if articlesViewModel.isArticlesLoading {
+                    VStack{
+                        Spacer()
+                        ProgressView("Loading").offset(x: 0, y: 50)
+                        Spacer()
                     }
+                }else{
+                    List(articlesViewModel.articles, id: \.id){ article in
+                        NavigationLink(destination: WebViewHolder(url: URL(string: article.url)!, article: article)){
+                            NewsFeedViewWithConfiguration(article: article)
+                        }
+                    }
+                    .padding(.bottom, -8)
                 }
-                .padding(.bottom, -8)
                 Spacer()
-                CategorySelector(categories: categories, selectedCategory: $selectedCategoryIndex)
+                CategorySelector(categories: categories, articleViewModel: articlesViewModel,selectedCategory: initialCategory)
                     .frame(height:100)
                 }.edgesIgnoringSafeArea(.all)
                 .navigationViewStyle(StackNavigationViewStyle())
@@ -66,6 +73,9 @@ struct RootView: View {
                 }, label: {
                     Image(systemName: "folder").frame(width: 30, height: 50,alignment: .center)
                 }))
+            .onAppear {
+                articlesViewModel.loadArticles(for: categories[initialCategory])
+            }
         }
 
     }

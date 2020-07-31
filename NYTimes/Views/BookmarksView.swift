@@ -18,7 +18,6 @@ struct BookmarksView: View {
     
     @ViewBuilder
     var body: some View {
-        if savedArticles.count > 0 {
             List{
                 ForEach(savedArticles,id:\.id) { savedArticle in
                     NavigationLink(destination: WebViewHolder(url: URL(string: savedArticle.url)!, article: Article(from: savedArticle))){
@@ -31,13 +30,6 @@ struct BookmarksView: View {
             .listStyle(PlainListStyle())
             .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Bookmarks", displayMode: .automatic)
-        }else{
-            Text("No Bookmarks Added yet")
-                .font(.system(size: 22, weight: Font.Weight.semibold, design: .rounded))
-                .navigationBarTitle("Bookmarks", displayMode: .automatic)
-        }
-        
-        
     }
     
     func moveBookmarks(from source:IndexSet, to destination:Int){
