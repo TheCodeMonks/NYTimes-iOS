@@ -38,11 +38,16 @@ struct RootView: View {
     
     var categories:[Category] = Category.allCases
     
-    var initialCategory = 0
+    var initialCategory:Int
     
     @ObservedObject var articlesViewModel = ArticleViewModel(repository: ArticleRepository())
     
     @State var shouldShowBookmarks = false
+    
+    init() {
+        initialCategory = 0
+        articlesViewModel.loadArticles(for: categories[initialCategory])
+    }
     
     var body: some View {
         NavigationView {
@@ -73,9 +78,6 @@ struct RootView: View {
                 }, label: {
                     Image(systemName: "folder").frame(width: 30, height: 50,alignment: .center)
                 }))
-            .onAppear {
-                articlesViewModel.loadArticles(for: categories[initialCategory])
-            }
         }
 
     }

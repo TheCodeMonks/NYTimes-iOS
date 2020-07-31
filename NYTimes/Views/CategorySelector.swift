@@ -14,10 +14,10 @@ struct CategorySelector: View {
     var articleViewModel: ArticleViewModel
     @State var selectedCategory: Int = 0 {
         didSet {
-            print("selected Category: \(categories[selectedCategory])")
             articleViewModel.loadArticles(for: categories[selectedCategory])
         }
     }
+
     
     var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
@@ -38,7 +38,6 @@ struct CategorySelector: View {
                             .cornerRadius(10)
                             .onTapGesture {
                                 self.selectedCategory = index
-                                print(self.selectedCategory)
                         }
                     }.padding(.leading,8)
                 }
