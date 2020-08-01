@@ -35,12 +35,15 @@ let articles = [
 
 struct RootView: View {
     
+    @Environment(\.managedObjectContext) var managedObjectContext
     
     var categories:[Category] = Category.allCases
     
     var initialCategory:Int
     
     @ObservedObject var articlesViewModel = ArticleViewModel(repository: ArticleRepository())
+    
+    @ObservedObject var bookmarkViewModel = BookmarkViewModel()
     
     @State var shouldShowBookmarks = false
     
@@ -62,7 +65,21 @@ struct RootView: View {
                 }else{
                     List(articlesViewModel.articles, id: \.id){ article in
                         NavigationLink(destination: WebViewHolder(url: URL(string: article.url)!, article: article)){
-                            NewsFeedViewWithConfiguration(article: article)
+                            NewsFeedView(article: article)
+                                .contextMenu(menuItems: {
+                                    Button(action: {
+                                        bookmarkViewModel.bookmark(for: article)
+                                    }) {
+                                        Text("Bookmark")
+                                        Image(uiImage:UIImage(systemName:"bookmark")!)
+                                    }
+                                    .alert(isPresented: $bookmarkViewModel.shouldShowAlert) {
+                                        Alert(
+                                            title: Text(bookmarkViewModel.message),
+                                            dismissButton: .default(Text("OK"))
+                                        )
+                                    }
+                                })
                         }
                     }
                     .padding(.bottom, -8)
@@ -78,6 +95,9 @@ struct RootView: View {
                 }, label: {
                     Image(systemName: "folder").frame(width: 30, height: 50,alignment: .center)
                 }))
+        }.onAppear {
+            let repo = BookmarkRepository(context: managedObjectContext)
+            bookmarkViewModel.repository = repo
         }
 
     }
@@ -86,71 +106,19 @@ struct RootView: View {
     
 }
 
-struct NewsFeedViewWithConfiguration: View {
-    
-    var article:Article
-    @State var showBookmarksAlert:Bool = false
-    
-    @State var alertMessage = ""
-    
-    @Environment(\.managedObjectContext) var managedObjectContext
-    
-    var body: some View {
-        NewsFeedView(article: article)
-            .contextMenu(menuItems: {
-                Button(action: {
-                    bookmark(with: article)
-                }) {
-                    Text("Bookmark")
-                    Image(uiImage:UIImage(systemName:"bookmark")!)
-                }
-                .alert(isPresented: $showBookmarksAlert) {
-                    Alert(
-                        title: Text(self.alertMessage),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
-            })
-    }
-    
-    func bookmark(with article:Article){
-        
-        do {
-            
-            let fetchRequest:NSFetchRequest<CDArticle> = CDArticle.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "url==%@", article.url)
-            let objectCount = try managedObjectContext.count(for: fetchRequest)
-            if objectCount > 0 {
-                showAlert(message: "Bookmark already exists!")
-                return
-            }
-            
-            let count = try managedObjectContext.count(for: CDArticle.fetchRequest())
-            let savedArticle = CDArticle(context: managedObjectContext)
-            savedArticle.id = article.id
-            savedArticle.title = article.title
-            savedArticle.subtitle = article.subtitle
-            savedArticle.author = article.author
-            savedArticle.imageUrl = article.imageUrl
-            savedArticle.url = article.url
-            savedArticle.index = Int16(count)
-            if managedObjectContext.hasChanges {
-                try managedObjectContext.save()
-                showAlert(message: "Added to Bookmark")
-            }
-            
-        }catch let error {
-            debugPrint(error)
-            showAlert(message: "Error adding Bookmark")
-            return
-        }
-    }
-    
-    func showAlert(message:String){
-        self.alertMessage = message
-        self.showBookmarksAlert = true
-    }
-}
+//struct NewsFeedViewWithConfiguration: View {
+//    
+//    
+//    var bookmarkViewModel:BookmarkViewModel
+//    
+//    var article:Article
+//   
+//    
+//    var body: some View {
+//        
+//            
+//        }
+//}
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {

@@ -15,7 +15,7 @@ class ArticleRepository {
 
     func fetchArticles(for category: Category, completion: @escaping  ([Article]?)->Void){
          
-        let request = URLRequest(url: URL(string: category.url)!, cachePolicy: .returnCacheDataElseLoad)
+        let request = URLRequest(url: URL(string: category.url)!, cachePolicy: .reloadIgnoringLocalCacheData)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {

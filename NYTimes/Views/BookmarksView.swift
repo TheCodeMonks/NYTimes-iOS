@@ -16,6 +16,8 @@ struct BookmarksView: View {
     @FetchRequest(entity: CDArticle.entity(), sortDescriptors: [], predicate: nil, animation: Animation.linear)
     var savedArticles:FetchedResults<CDArticle>
     
+    @ObservedObject var bookmarkViewModel = BookmarkViewModel()
+    
     @ViewBuilder
     var body: some View {
             List{
@@ -25,22 +27,19 @@ struct BookmarksView: View {
                     }
                 }
                 .onDelete(perform: deleteBookmark(at:))
-                .onMove(perform: moveBookmarks(from:to:))
             }
             .listStyle(PlainListStyle())
             .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Bookmarks", displayMode: .automatic)
+            .onAppear {
+                self.bookmarkViewModel.repository = BookmarkRepository(context: self.managedObjectContext)
+            }
     }
-    
-    func moveBookmarks(from source:IndexSet, to destination:Int){
-        print(source.first ?? 0,destination)
-    }
-    
+        
     func deleteBookmark(at offsets:IndexSet){
         for index in offsets {
-            managedObjectContext.delete(savedArticles[index])
+            bookmarkViewModel.deleteBookmark(article: savedArticles[index])
         }
-        try? managedObjectContext.save()
     }
 }
 

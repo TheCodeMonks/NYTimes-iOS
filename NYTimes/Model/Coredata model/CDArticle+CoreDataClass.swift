@@ -2,7 +2,7 @@
 //  CDArticle+CoreDataClass.swift
 //  NYTimes
 //
-//  Created by Waseem Akram on 29/07/20.
+//  Created by Waseem Akram on 01/08/20.
 //  Copyright © 2020 Waseem Akram. All rights reserved.
 //
 //

@@ -15,95 +15,28 @@ struct WebViewHolder: View {
     var article:Article
     
     @State var isBookmarked = false
-    @State var bookmarkStatus = ""
-    @State var shouldAnimateForBookmark = false
     
     @Environment(\.managedObjectContext) var managedObjectContext
     
+    @ObservedObject var bookmarkViewModel = BookmarkViewModel(repository: BookmarkRepository())
+    
     var body: some View {
-        ZStack{
-            WebView(url: url)
-                .blur(radius: shouldAnimateForBookmark ? 20 : 0)
-                
-            Text(bookmarkStatus)
-                .transition(.slide)
-                .multilineTextAlignment(.center)
-                .font(.system(size: 32, weight: .medium, design: .rounded))
-                .opacity(shouldAnimateForBookmark ? 1 : 0)
-                .blur(radius: 0)
-        }
-        
-        .animation(Animation.easeInOut(duration: 0.5))
+        WebView(url: url)
         .navigationBarItems(trailing: Button(action: {
-            isBookmarked ? deleteBookmark() : addBookmark()
+            self.isBookmarked ? bookmarkViewModel.deleteBookmark(article: article,showAlert: true) : bookmarkViewModel.bookmark(for: article)
+            self.isBookmarked = bookmarkViewModel.isArticleExists(with: article.url)
         }, label: {
             Image(systemName: "bookmark\(isBookmarked ? ".fill" : "")").frame(width: 30, height: 50,alignment: .center)
-        }))
+        }).alert(isPresented: $bookmarkViewModel.shouldShowAlert) {
+            Alert(
+                title: Text(bookmarkViewModel.message),
+                dismissButton: .default(Text("OK"))
+            )
+        })
         .onAppear {
-            isBookmarked = isAlreadyBookmarked()
-        }
-    
-    }
-    
-    func isAlreadyBookmarked()-> Bool{
-        do {
-            let fetchRequest:NSFetchRequest<CDArticle> = CDArticle.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "url == %@", article.url)
-            let results = try managedObjectContext.fetch(fetchRequest)
-            if results.first != nil {
-                return true
-            }
-        }catch let error {
-            debugPrint(error)
-        }
-        return false
-    }
-    
-    func addBookmark(){
-        do {
-            let cdArticle = CDArticle(context: managedObjectContext)
-            cdArticle.set(from: article)
-            if managedObjectContext.hasChanges {
-                try managedObjectContext.save()
-                bookmarkStatus = "Added to Bookmarks"
-                shouldAnimateForBookmark = true
-                isBookmarked = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1200)) {
-                    shouldAnimateForBookmark = false
-                    
-                }
-            }
-            
-        }catch let error {
-            debugPrint(error)
-        }
-        
-    }
-    
-    func deleteBookmark(){
-        do {
-            let fetchRequest:NSFetchRequest<CDArticle> = CDArticle.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "url == %@", article.url)
-            let results = try managedObjectContext.fetch(fetchRequest)
-            print(results)
-            if let article = results.first {
-                managedObjectContext.delete(article)
-                try managedObjectContext.save()
-                bookmarkStatus = "Removed from Bookmarks"
-                shouldAnimateForBookmark = true
-                isBookmarked = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1200)) {
-                    shouldAnimateForBookmark = false
-                    
-                }
-                
-            }
-        }catch let error {
-            debugPrint(error)
+            self.isBookmarked = bookmarkViewModel.isArticleExists(with: article.url)
         }
     }
-    
-    
 }
 
 struct WebViewHolder_Previews: PreviewProvider {

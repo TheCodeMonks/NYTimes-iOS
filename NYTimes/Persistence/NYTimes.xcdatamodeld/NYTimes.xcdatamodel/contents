@@ -4,7 +4,6 @@
         <attribute name="author" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageUrl" attributeType="String"/>
-        <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="subtitle" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="url" attributeType="String"/>
@@ -15,6 +14,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="CDArticle" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="CDArticle" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>
