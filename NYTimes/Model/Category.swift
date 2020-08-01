@@ -10,8 +10,8 @@ import Foundation
 
 enum Category: String,CaseIterable {
     
-    case science = "Science"
     case tech = "Tech"
+    case science = "Science"
     case business = "Business"
     case yourmoney = "Your Money"
     case education = "Education"
