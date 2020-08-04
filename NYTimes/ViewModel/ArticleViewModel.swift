@@ -10,24 +10,27 @@ import Foundation
 
 class ArticleViewModel:ObservableObject {
     
-    var repository:ArticleRepository
+    var httpUtility = HTTPUtility()
+    var htmlScrapUtlity = HTMLScraperUtility()
     
     @Published var articles = [Article]()
     @Published var isArticlesLoading = false
     
-    init(repository:ArticleRepository) {
-        self.repository = repository
-    }
-    
+ 
     func loadArticles(for category:Category) {
         self.isArticlesLoading = true
         self.articles = []
-        repository.fetchArticles(for: category) { [weak self] (articles) in
+        httpUtility.fetch(using: URL(string: category.url)!) { [weak self] (data) in
             guard let self = self else { return }
-            self.isArticlesLoading = false
-            if let articles = articles {
-                self.articles = articles
-                return
+            if let data = data {
+                self.htmlScrapUtlity.scrapArticleFrom(data: data) { [weak self] (articles) in
+                    guard let self = self else { return }
+                    self.isArticlesLoading = false
+                    if let articles = articles {
+                        self.articles = articles
+                        return
+                    }
+                }
             }
         }
     }

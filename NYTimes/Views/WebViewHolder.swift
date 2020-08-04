@@ -41,7 +41,7 @@ struct WebViewHolder: View {
 
 struct WebViewHolder_Previews: PreviewProvider {
     static var previews: some View {
-        WebViewHolder(url:URL(string: "https://google.com")!, article: articles[0])
+        WebViewHolder(url:URL(string: "https://google.com")!, article: PlaceHolderData.articles[0])
             .previewDevice(.init(stringLiteral: "iPhone X"))
     }
 }

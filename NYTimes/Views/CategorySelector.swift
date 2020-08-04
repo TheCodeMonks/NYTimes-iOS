@@ -58,7 +58,7 @@ struct CategorySelector_Previews: PreviewProvider {
             Category.science,
             Category.tech,
             Category.business
-        ], articleViewModel: ArticleViewModel(repository: ArticleRepository()),
+        ], articleViewModel: ArticleViewModel(),
                          selectedCategory: 0)
             .previewDevice(.init("iPhone X"))
             

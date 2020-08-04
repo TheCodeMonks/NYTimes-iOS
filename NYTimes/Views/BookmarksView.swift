@@ -28,7 +28,7 @@ struct BookmarksView: View {
                 }
                 .onDelete(perform: deleteBookmark(at:))
             }
-            .listStyle(PlainListStyle())
+            .listStyle(InsetGroupedListStyle())
             .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Bookmarks", displayMode: .automatic)
             .onAppear {
