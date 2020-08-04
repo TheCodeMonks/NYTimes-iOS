@@ -142,6 +142,11 @@ Before you open a issue or report a bug, please check if the issue or bug is rel
 - Open PR against latest `dev` branch. Add nice description in PR.
 - You're done!
 
+# Donation
+If this project help you reduce time to develop, you can give me a cup of coffee :) 
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/iamwaseem99)
+
 <a name="contact"/>
 
 ## 📱 Contact
