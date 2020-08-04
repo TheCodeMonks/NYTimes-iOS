@@ -100,7 +100,7 @@ This app uses MVVM architecture.
 
 ### Articles Loading
 
-Articles are loaded Asynchornously. While loading the Readacted View provided by SwiftUI is rendered.
+Articles are loaded asynchornously. While loading, the Readacted View provided by SwiftUI is rendered.
 
 <img src="https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/HomeLoading.gif" width=250 height=600 />
 
