@@ -92,7 +92,7 @@ This project uses SPM (Swift Package Manager) as Dependency manager.
     
 This app uses MVVM architecture.
 
-![](https://github.com/TheCodeMonks/Notes-App/blob/master/screenshots/ANDROID%20ROOM%20DB%20DIAGRAM.jpg)
+![MVVM](https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/MVVM.jpeg)
 
 <a name="features"/>
 
