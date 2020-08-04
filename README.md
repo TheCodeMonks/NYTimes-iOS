@@ -12,7 +12,7 @@
 
 
 
-# NYTimes-iOS
+# NYTimes
 
 NY Times is an Minimal News 🗞 iOS application built to describe the use of **SwiftSoup** and **CoreData** with **SwiftUI**.
 
