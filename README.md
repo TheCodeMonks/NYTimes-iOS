@@ -1,7 +1,7 @@
 ![](https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/Banner%400.25x.png)
 ![SwiftUI](https://img.shields.io/badge/Interface-SwfitUI-red)
 ![Architecture](https://img.shields.io/badge/Architecture-MVVM-green)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/devwaseem/NYTimes-iOS/blob/master/LICENSE)
 ![GitHub forks](https://img.shields.io/github/forks/devwaseem/NYTimes-iOS?label=Fork&style=social)
 ![GitHub Stars](https://img.shields.io/github/stars/devwaseem/NYTimes-iOS?label=Stars&style=social)
 ![GitHub Watchers](https://img.shields.io/github/watchers/devwaseem/NYTimes-iOS?label=Watchers&style=social)
@@ -152,7 +152,7 @@ Drop a mail to:- thecodemonksorg@gmail.com
 
 <a name="license"/>
 
-## ⚖️ License
+## ⚖️ [License](https://github.com/devwaseem/NYTimes-iOS/blob/master/LICENSE)
 
 ```
 MIT License
