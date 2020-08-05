@@ -133,7 +133,7 @@ If you want to contribute to this library, you're always welcome!
 You can contribute us by filing issues, bugs and PRs.
 
 ### Before you do
-Before you open a issue or report a bug, please check if the issue or bug is related to Xcode beta.
+Before you open a issue or report a bug, please check if the issue or bug is related to Xcode or SwiftUI.
 
 ### Contributing guidelines:
 - Open issue regarding proposed change.
