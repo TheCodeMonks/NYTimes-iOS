@@ -16,6 +16,27 @@
 
 NY Times is an Minimal News 🗞 iOS application built to describe the use of **SwiftSoup** and **CoreData** with **SwiftUI**.
 
+## ⛓ Features
+
+<table style="width:100%">
+  <tr>
+    <th>Articles Loading </th>
+    <th>Browse by Category</th> 
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/HomeLoading.gif" width=250 height=600 /></td> 
+    <td><img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/browseByCategories.gif" width=250 height=600 /></td> 
+  </tr>
+  <tr>
+    <th>Bookmark a Article using 3D Touch. </th>
+    <th>Deleting bookmarks is just one swipe away</th> 
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/bookmark3d.gif" width=250 height=600 /></td>
+    <td><img src="https://github.com/TheCodeMonks/NYTimes-iOS/blob/master/NYTimes%20Screenshots/gifs/manageBookmark.gif" width=250 height=600 /></td>
+  </tr>
+</table>
+
 ## 📝 Table of Contents  
 - [Requirements](#requirements)
 - [What you can learn?](#whatyoucanlearn)
@@ -26,6 +47,8 @@ NY Times is an Minimal News 🗞 iOS application built to describe the use of **
 - [Contribute](#contribute)
 - [Contact](#contact)
 - [License](#license)
+
+
 
 
 <a name="requirements"/>
@@ -93,34 +116,6 @@ This project uses SPM (Swift Package Manager) as Dependency manager.
 This app uses MVVM architecture.
 
 ![MVVM](https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/MVVM.jpeg)
-
-<a name="features"/>
-
-## ⛓ Features
-
-### Articles Loading
-
-Articles are loaded asynchornously. While loading, the Readacted View provided by SwiftUI is rendered.
-
-<img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/HomeLoading.gif" width=250 height=600 />
-
-### Browse by Category
-
-A User can browse news articles from given categories.
-
-<img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/browseByCategories.gif" width=250 height=600 />
-
-### Bookmark a Article using 3D Touch.
-
-A User can Bookmark a article in Homescreen using the 3D touch on the article view.
-
-<img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/bookmark3d.gif" width=250 height=600 />
-
-### Deleting bookmarks is just one swipe away
-
-A User can swipe or click edit button to delete the bookmarks.
-
-<img src="https://github.com/TheCodeMonks/NYTimes-iOS/blob/master/NYTimes%20Screenshots/gifs/manageBookmark.gif" width=250 height=600 />
 
 
 <a name="contribute"/>
