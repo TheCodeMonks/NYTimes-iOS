@@ -1,13 +1,13 @@
-![](https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/Banner%400.25x.png)
+![](https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/Banner%400.25x.png)
 ![SwiftUI](https://img.shields.io/badge/Interface-SwfitUI-red)
 ![Architecture](https://img.shields.io/badge/Architecture-MVVM-green)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/devwaseem/NYTimes-iOS/blob/master/LICENSE)
-![GitHub forks](https://img.shields.io/github/forks/devwaseem/NYTimes-iOS?label=Fork&style=social)
-![GitHub Stars](https://img.shields.io/github/stars/devwaseem/NYTimes-iOS?label=Stars&style=social)
-![GitHub Watchers](https://img.shields.io/github/watchers/devwaseem/NYTimes-iOS?label=Watchers&style=social)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/TheCodeMonks/NYTimes-iOS/blob/master/LICENSE)
+![GitHub forks](https://img.shields.io/github/forks/TheCodeMonks/NYTimes-iOS?label=Fork&style=social)
+![GitHub Stars](https://img.shields.io/github/stars/TheCodeMonks/NYTimes-iOS?label=Stars&style=social)
+![GitHub Watchers](https://img.shields.io/github/watchers/TheCodeMonks/NYTimes-iOS?label=Watchers&style=social)
 
 
-[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fdevwaseem%2FNYTimes-iOS)](http://twitter.com/share?text=Checkout+this+cool+project+made+with+SwiftUI,+by+@iamwaseem99&url=https%3A%2F%2Fgithub.com%2Fdevwaseem%2FNYTimes-iOS&hashtags=swiftui,ios,iphone,news,github,iosdevelopers,swift,xcode)
+[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https://github.com/TheCodeMonks/NYTimes-iOS)](http://twitter.com/share?text=Checkout+this+cool+project+made+with+SwiftUI,+by+@iamwaseem99&url=https://github.com/TheCodeMonks/NYTimes-iOS&hashtags=swiftui,ios,iphone,news,github,iosdevelopers,swift,xcode)
 [![Twitter Follow](https://img.shields.io/twitter/follow/iamwaseem99?style=social)](https://twitter.com/iamwaseem99)
 
 
@@ -92,7 +92,7 @@ This project uses SPM (Swift Package Manager) as Dependency manager.
     
 This app uses MVVM architecture.
 
-![MVVM](https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/MVVM.jpeg)
+![MVVM](https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/MVVM.jpeg)
 
 <a name="features"/>
 
@@ -102,25 +102,25 @@ This app uses MVVM architecture.
 
 Articles are loaded asynchornously. While loading, the Readacted View provided by SwiftUI is rendered.
 
-<img src="https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/HomeLoading.gif" width=250 height=600 />
+<img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/HomeLoading.gif" width=250 height=600 />
 
 ### Browse by Category
 
 A User can browse news articles from given categories.
 
-<img src="https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/browseByCategories.gif" width=250 height=600 />
+<img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/browseByCategories.gif" width=250 height=600 />
 
 ### Bookmark a Article using 3D Touch.
 
 A User can Bookmark a article in Homescreen using the 3D touch on the article view.
 
-<img src="https://raw.githubusercontent.com/devwaseem/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/bookmark3d.gif" width=250 height=600 />
+<img src="https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/gifs/bookmark3d.gif" width=250 height=600 />
 
 ### Deleting bookmarks is just one swipe away
 
 A User can swipe or click edit button to delete the bookmarks.
 
-<img src="https://github.com/devwaseem/NYTimes-iOS/blob/master/NYTimes%20Screenshots/gifs/manageBookmark.gif" width=250 height=600 />
+<img src="https://github.com/TheCodeMonks/NYTimes-iOS/blob/master/NYTimes%20Screenshots/gifs/manageBookmark.gif" width=250 height=600 />
 
 
 <a name="contribute"/>
@@ -157,7 +157,7 @@ Drop a mail to:- thecodemonksorg@gmail.com
 
 <a name="license"/>
 
-## ⚖️ [License](https://github.com/devwaseem/NYTimes-iOS/blob/master/LICENSE)
+## ⚖️ [License](https://github.com/TheCodeMonks/NYTimes-iOS/blob/master/LICENSE)
 
 ```
 MIT License
