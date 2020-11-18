@@ -23,7 +23,12 @@ struct RootView: View {
     
     @ObservedObject var bookmarkViewModel = BookmarkViewModel()
     
+    @ObservedObject var networkReachability = NetworkReachabilty.shared
+    
     @State var shouldShowBookmarks = false
+    
+    @State var isLoaded = false
+    
     
     init() {
         initialCategory = 0
@@ -32,87 +37,106 @@ struct RootView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {EmptyView()}
-                if articlesViewModel.isArticlesLoading {
-                    VStack{
-                        Spacer()
-                        ForEach(0..<3) { i in
-                            NewsFeedView(article: Article(url: "Url", imageUrl: "imageUrl", title: "TitleTitleTitleTitle", subtitle: "SubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitle", author: "AuthorAuthor"))
-                        }.redacted(reason: .placeholder)
-                        Spacer()
-                    }
-                }else{
-                    List(articlesViewModel.articles, id: \.id){ article in
-                        NavigationLink(destination: WebViewHolder(url: URL(string: article.url)!, article: article)){
-                            NewsFeedView(article: article)
-                                .contextMenu(menuItems: {
-                                    Button(action: {
-                                        bookmarkViewModel.bookmark(for: article)
-                                    }) {
-                                        Text("Bookmark")
-                                        Image(uiImage:UIImage(systemName:"bookmark")!)
-                                    }
-                                    .alert(isPresented: $bookmarkViewModel.shouldShowAlert) {
-                                        return Alert(
-                                            title: Text(bookmarkViewModel.message),
-                                            dismissButton: .default(Text("OK"))
-                                        )
-                                    }
-                                })
-                        }
-                    }
-                    .padding(.bottom, -8)
+            if networkReachability.isNetworkConnected {
+                ArticleView()
+                    .edgesIgnoringSafeArea(.all)
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .navigationBarTitle(Text("NYTimes"))
+                    .navigationBarItems(trailing: Button(action: {
+                        self.shouldShowBookmarks.toggle()
+                    }, label: {
+                        Image(systemName: "folder").frame(width: 30, height: 50,alignment: .center)
+                    }))
+            }else {
+                VStack {
+                    Image(systemName: "wifi.slash")
+                        .font(.system(size: 50))
+                        .frame(width: 50, height: 50, alignment: .center)
+                        .padding(.bottom, 24)
+                    Text("Network not available")
+                        .alert(isPresented: .constant(true)) {
+                            Alert(title: Text("Network not available"), message: Text("Turn on mobile data or use Wi-Fi to access data"), dismissButton: .default(Text("OK")))
+                        }.navigationBarTitle(Text("NYTimes"))
                 }
-                Spacer()
-                CategorySelector(categories: categories, articleViewModel: articlesViewModel,selectedCategory: initialCategory)
-                    .frame(height:100)
-                }.edgesIgnoringSafeArea(.all)
-                .navigationViewStyle(StackNavigationViewStyle())
-                .navigationBarTitle(Text("NYTimes"))
-                .navigationBarItems(trailing: Button(action: {
-                    self.shouldShowBookmarks.toggle()
-                }, label: {
-                    Image(systemName: "folder").frame(width: 30, height: 50,alignment: .center)
-                }))
+                
+            }
         }.onAppear {
             let repo = BookmarkRepository(context: managedObjectContext)
             bookmarkViewModel.repository = repo
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(650)) {
+                isLoaded = true
+            }
         }
 
+    }
+    
+    fileprivate func ArticleView() -> some View {
+        return VStack {
+            NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {EmptyView()}
+            if articlesViewModel.isArticlesLoading {
+                VStack{
+                    Spacer()
+                    ForEach(0..<3) { i in
+                        NewsFeedView(article: .placeholder)
+                    }.redacted(reason: .placeholder)
+                    Spacer()
+                }
+            }else{
+                ArticleListView(articlesViewModel: articlesViewModel, bookmarkViewModel: bookmarkViewModel)
+            }
+            Spacer()
+            CategorySelector(categories: categories, articleViewModel: articlesViewModel,selectedCategory: initialCategory)
+                .frame(height:100)
+                .offset(y: isLoaded ? 0 : 100)
+                .animation(isLoaded ? .spring() : .none)
+            
+        }
     }
     
     
     
 }
 
-//struct NewsFeedViewWithConfiguration: View {
-//    
-//    
-//    var bookmarkViewModel:BookmarkViewModel
-//    
-//    var article:Article
-//   
-//    
-//    var body: some View {
-//        
-//            
-//        }
-//}
+
+struct ArticleListView: View {
+    
+    @ObservedObject var articlesViewModel: ArticleViewModel
+    @ObservedObject var bookmarkViewModel: BookmarkViewModel
+    
+    var body: some View {
+        List(articlesViewModel.articles, id: \.id){ article in
+            NavigationLink(destination: WebViewHolder(url: URL(string: article.url)!, article: article)){
+                NewsFeedView(article: article)
+                    .contextMenu(menuItems: {
+                        Button(action: {
+                            bookmarkViewModel.bookmark(for: article)
+                        }) {
+                            Text("Bookmark")
+                            Image(uiImage:UIImage(systemName:"bookmark")!)
+                        }
+                        .alert(isPresented: $bookmarkViewModel.shouldShowAlert) {
+                            return Alert(
+                                title: Text(bookmarkViewModel.message),
+                                dismissButton: .default(Text("OK"))
+                            )
+                        }
+                    })
+            }
+        }
+        .listStyle(InsetGroupedListStyle())
+        .padding(.bottom, -8)
+    }
+}
+
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             RootView()
-                
-                .previewDevice(.init(stringLiteral: "iPhone X"))
-//                        .environment(\.colorScheme, .dark)
-//            RootView()
-//                .previewDevice(.init(stringLiteral: "iPad Pro (9.7-inch)"))
-                        
+                .previewDevice(.init(stringLiteral: "iPhone 11"))
         }
-
     }
 }
+
 
 

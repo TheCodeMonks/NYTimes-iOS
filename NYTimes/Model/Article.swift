@@ -36,5 +36,8 @@ public class Article:NSObject,Codable,Identifiable {
         self.imageUrl = dataArticle.imageUrl
     }
     
+   
+    static var placeholder = Article(url: "Url", imageUrl: "imageUrl", title: String(repeating: "Title", count: 5), subtitle: String(repeating: "Subtitle", count: 10), author: String(repeating: "Author", count: 3))
+    
 }
 
