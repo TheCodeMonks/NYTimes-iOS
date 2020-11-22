@@ -56,9 +56,8 @@ NY Times is an Minimal News 🗞 iOS application built to describe the use of **
 ## ⚙️ Requirements
 ```
 iOS 14+
-Xcode 12 beta 3
+Xcode 12.2 and Up
 ```
-> :warning: This App is compiled with Xcode 12 beta 3. Using other versions of xcode might break the project.
 
 <a name="whatyoucanlearn"/>
 
@@ -93,6 +92,7 @@ This project uses SPM (Swift Package Manager) as Dependency manager.
 
  - [SwiftSoup](https://github.com/scinfu/SwiftSoup)
  - [Kingfisher](https://github.com/onevcat/Kingfisher)
+ - [Reachability](https://github.com/ashleymills/Reachability.swift)
 
 <a name="projectstructure"/>
 
@@ -101,6 +101,7 @@ This project uses SPM (Swift Package Manager) as Dependency manager.
     NYTimes                 # Root Group
     .
     ├── Utilities           # Utilities for Fetching data ans Scraping HTML
+    ├── Extensions          # Some useful extensions
     ├── Globals             # Contains App constants
     ├── Persistence         # Coredata files. Contains coredata model and Singleton for ManagedObjectContext
     ├── Views               # SwiftUI Views
