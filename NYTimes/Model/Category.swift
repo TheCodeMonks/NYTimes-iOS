@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Category: String,CaseIterable {
+enum Category: String, CaseIterable {
     
     case tech = "Tech"
     case science = "Science"
@@ -29,5 +29,4 @@ enum Category: String,CaseIterable {
         case .space: return "https://www.nytimes.com/section/science/space"
         }
     }
-    
 }
