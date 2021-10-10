@@ -12,20 +12,17 @@ import CoreData
 struct RootView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
-    
-    var categories: [Category] = Category.allCases
-    
+
+    @State var categories: [Category] = Category.allCases
+
     var initialCategory: Int
     
     @ObservedObject var articlesViewModel = ArticleViewModel()
-    
     @ObservedObject var bookmarkViewModel = BookmarkViewModel()
-    
     @ObservedObject var networkReachability = NetworkReachabilty.shared
 
     @State var shouldShowBookmarks = false
     @State var openCategories = false
-    
     @State var isLoaded = false
 
     init() {
@@ -44,7 +41,7 @@ struct RootView: View {
                         leading: categoriesView,
                         trailing: bookmarksView
                     )
-            }else {
+            } else {
                 VStack {
                     Image(systemName: "wifi.slash")
                         .font(.system(size: 50))
@@ -55,7 +52,6 @@ struct RootView: View {
                             Alert(title: Text("Network not available"), message: Text("Turn on mobile data or use Wi-Fi to access data"), dismissButton: .default(Text("OK")))
                         }.navigationBarTitle(Text("NYTimes"))
                 }
-                
             }
         }.onAppear {
             let repo = BookmarkRepository(context: managedObjectContext)
@@ -63,6 +59,11 @@ struct RootView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(650)) {
                 isLoaded = true
             }
+            if let categories = UserDefaults.standard
+                .array(forKey: Constants.UserDefaults.categories) as? [String] {
+                self.categories = categories.map({ Category(rawValue: $0)! })
+            }
+            articlesViewModel.loadArticles(for: categories[initialCategory])
         }
     }
 
@@ -96,9 +97,11 @@ struct RootView: View {
                 ArticleListView(articlesViewModel: articlesViewModel, bookmarkViewModel: bookmarkViewModel)
             }
             Spacer()
-            CategorySelector(categories: categories, articleViewModel: articlesViewModel,selectedCategory: initialCategory)
-                .frame(height:100)
-                .offset(y: isLoaded ? 0 : 100)
+            CategorySelector(
+                categories: categories,
+                articleViewModel: articlesViewModel,
+                selectedCategory: initialCategory
+            ).frame(height: 100).offset(y: isLoaded ? 0 : 100)
                 .animation(isLoaded ? .spring() : .none)
         }
     }

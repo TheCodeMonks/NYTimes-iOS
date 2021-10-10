@@ -13,7 +13,10 @@ class Constants {
     class Endpoints {
         static let BASEURL = "https://www.nytimes.com"
     }
-    
+
+    struct UserDefaults {
+        static let categories = "UD_CATEGORIES"
+    }
 }
 
 

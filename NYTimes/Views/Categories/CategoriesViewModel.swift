@@ -14,13 +14,19 @@ class CategoriesViewModel: ObservableObject {
         didSet { saveCategories() }
     }
 
-    init() {}
+    init() {
+        if let categories = UserDefaults.standard
+            .array(forKey: Constants.UserDefaults.categories) as? [String] {
+            self.categories = categories.map({ Category(rawValue: $0)! })
+        }
+    }
 
     func move(from source: IndexSet, to destination: Int) {
         categories.move(fromOffsets: source, toOffset: destination)
     }
 
     private func saveCategories() {
-
+        let categories = categories.map({ $0.rawValue })
+        UserDefaults.standard.set(categories, forKey: Constants.UserDefaults.categories)
     }
 }
