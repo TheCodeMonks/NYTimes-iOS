@@ -9,27 +9,22 @@
 import SwiftUI
 import CoreData
 
-
-
 struct RootView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
-    
-    var categories:[Category] = Category.allCases
-    
-    var initialCategory:Int
+
+    @State var categories: [Category] = Category.allCases
+
+    var initialCategory: Int
     
     @ObservedObject var articlesViewModel = ArticleViewModel()
-    
     @ObservedObject var bookmarkViewModel = BookmarkViewModel()
-    
     @ObservedObject var networkReachability = NetworkReachabilty.shared
-    
+
     @State var shouldShowBookmarks = false
-    
+    @State var openCategories = false
     @State var isLoaded = false
-    
-    
+
     init() {
         initialCategory = 0
         articlesViewModel.loadArticles(for: categories[initialCategory])
@@ -42,12 +37,11 @@ struct RootView: View {
                     .edgesIgnoringSafeArea(.all)
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarTitle(Text("NYTimes"))
-                    .navigationBarItems(trailing: Button(action: {
-                        self.shouldShowBookmarks.toggle()
-                    }, label: {
-                        Image(systemName: "folder").frame(width: 30, height: 50,alignment: .center)
-                    }))
-            }else {
+                    .navigationBarItems(
+                        leading: categoriesView,
+                        trailing: bookmarksView
+                    )
+            } else {
                 VStack {
                     Image(systemName: "wifi.slash")
                         .font(.system(size: 50))
@@ -58,7 +52,6 @@ struct RootView: View {
                             Alert(title: Text("Network not available"), message: Text("Turn on mobile data or use Wi-Fi to access data"), dismissButton: .default(Text("OK")))
                         }.navigationBarTitle(Text("NYTimes"))
                 }
-                
             }
         }.onAppear {
             let repo = BookmarkRepository(context: managedObjectContext)
@@ -66,13 +59,36 @@ struct RootView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(650)) {
                 isLoaded = true
             }
+            if let categories = UserDefaults.standard
+                .array(forKey: Constants.UserDefaults.categories) as? [String] {
+                self.categories = categories.map({ Category(rawValue: $0)! })
+            }
+            articlesViewModel.loadArticles(for: categories[initialCategory])
         }
+    }
 
+    func updateCategories(_ categories: [Category]) {
+        self.categories = categories
+    }
+
+    private var categoriesView: some View {
+        Button(action: { openCategories = true }, label: {
+            Image(systemName: "square.stack.3d.up")
+                .frame(width: 30, height: 50, alignment: .center)
+        })
+    }
+
+    private var bookmarksView: some View {
+        Button(action: { shouldShowBookmarks = true }, label: {
+            Image(systemName: "folder")
+                .frame(width: 30, height: 50, alignment: .center)
+        })
     }
     
     fileprivate func ArticleView() -> some View {
         return VStack {
-            NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {EmptyView()}
+            NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {}
+            NavigationLink(destination: CategoriesView(viewModel: CategoriesViewModel(updateCategories)), isActive: $openCategories) {}
             if articlesViewModel.isArticlesLoading {
                 VStack{
                     Spacer()
@@ -81,20 +97,18 @@ struct RootView: View {
                     }.redacted(reason: .placeholder)
                     Spacer()
                 }
-            }else{
+            } else {
                 ArticleListView(articlesViewModel: articlesViewModel, bookmarkViewModel: bookmarkViewModel)
             }
             Spacer()
-            CategorySelector(categories: categories, articleViewModel: articlesViewModel,selectedCategory: initialCategory)
-                .frame(height:100)
-                .offset(y: isLoaded ? 0 : 100)
+            CategorySelector(
+                categories: categories,
+                articleViewModel: articlesViewModel,
+                selectedCategory: initialCategory
+            ).frame(height: 100).offset(y: isLoaded ? 0 : 100)
                 .animation(isLoaded ? .spring() : .none)
-            
         }
     }
-    
-    
-    
 }
 
 
@@ -137,6 +151,3 @@ struct RootView_Previews: PreviewProvider {
         }
     }
 }
-
-
-

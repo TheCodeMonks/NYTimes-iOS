@@ -18,7 +18,7 @@ class ArticleViewModel: ObservableObject {
     
     var cancellableTask: AnyCancellable? = nil
     
-    func loadArticles(for category:Category) {
+    func loadArticles(for category: Category) {
         guard let url = URL(string: category.url) else { return }
         self.isArticlesLoading = true
         self.cancellableTask?.cancel() //cancel last subscription to prevent race condition
@@ -35,5 +35,4 @@ class ArticleViewModel: ObservableObject {
     deinit {
         cancellableTask = nil
     }
-    
 }

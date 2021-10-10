@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		732DDA5E27125B650006F018 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732DDA5D27125B650006F018 /* CategoriesView.swift */; };
+		732DDA6027125B6D0006F018 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732DDA5F27125B6D0006F018 /* CategoriesViewModel.swift */; };
 		75117C2024D4294D0097E28F /* BookmarkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75117C1F24D4294D0097E28F /* BookmarkRepository.swift */; };
 		75117C2424D43CE90097E28F /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75117C2324D43CE90097E28F /* BookmarkViewModel.swift */; };
 		7524922624D053CE00B1ACA5 /* NewsFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7524922524D053CE00B1ACA5 /* NewsFeedView.swift */; };
@@ -65,6 +67,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		732DDA5D27125B650006F018 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		732DDA5F27125B6D0006F018 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
 		75117C1F24D4294D0097E28F /* BookmarkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRepository.swift; sourceTree = "<group>"; };
 		75117C2324D43CE90097E28F /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		7524922524D053CE00B1ACA5 /* NewsFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedView.swift; sourceTree = "<group>"; };
@@ -121,6 +125,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		732DDA5C27125B4F0006F018 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				732DDA5D27125B650006F018 /* CategoriesView.swift */,
+				732DDA5F27125B6D0006F018 /* CategoriesViewModel.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		7533BB3324D9DFE200A4AF49 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +221,7 @@
 		7557FAA424D0294B00F80607 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				732DDA5C27125B4F0006F018 /* Categories */,
 				7557FA8124D0271400F80607 /* RootView.swift */,
 				7557FA9F24D0277200F80607 /* CategorySelector.swift */,
 				7524922524D053CE00B1ACA5 /* NewsFeedView.swift */,
@@ -389,6 +403,7 @@
 				754C9A1D24D1500C00706469 /* Article.swift in Sources */,
 				75117C2424D43CE90097E28F /* BookmarkViewModel.swift in Sources */,
 				7557FA7B24D0271400F80607 /* AppDelegate.swift in Sources */,
+				732DDA5E27125B650006F018 /* CategoriesView.swift in Sources */,
 				75C2758324D0AC2C00A7A651 /* ArticleViewModel.swift in Sources */,
 				75C2759B24D0BA6B00A7A651 /* Bookmark.swift in Sources */,
 				75D4FB5B256542B00095AC82 /* NetworkReachabilty.swift in Sources */,
@@ -406,6 +421,7 @@
 				7552547324D5E2E700E2143D /* CDArticle+CoreDataProperties.swift in Sources */,
 				754FAFE724D0308900ACFE9E /* Category.swift in Sources */,
 				75C2759D24D0BB6C00A7A651 /* PersistenceManager.swift in Sources */,
+				732DDA6027125B6D0006F018 /* CategoriesViewModel.swift in Sources */,
 				7533BB3724D9E00C00A4AF49 /* HTMLScarperUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +582,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"NYTimes/Preview Content\"";
-				DEVELOPMENT_TEAM = Z43AQF953J;
+				DEVELOPMENT_TEAM = 7S7EBZGDA6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NYTimes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -589,7 +605,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"NYTimes/Preview Content\"";
-				DEVELOPMENT_TEAM = Z43AQF953J;
+				DEVELOPMENT_TEAM = 7S7EBZGDA6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NYTimes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
