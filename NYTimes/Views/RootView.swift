@@ -67,6 +67,10 @@ struct RootView: View {
         }
     }
 
+    func updateCategories(_ categories: [Category]) {
+        self.categories = categories
+    }
+
     private var categoriesView: some View {
         Button(action: { openCategories = true }, label: {
             Image(systemName: "square.stack.3d.up")
@@ -84,7 +88,7 @@ struct RootView: View {
     fileprivate func ArticleView() -> some View {
         return VStack {
             NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {}
-            NavigationLink(destination: CategoriesView(), isActive: $openCategories) {}
+            NavigationLink(destination: CategoriesView(viewModel: CategoriesViewModel(updateCategories)), isActive: $openCategories) {}
             if articlesViewModel.isArticlesLoading {
                 VStack{
                     Spacer()
@@ -147,6 +151,3 @@ struct RootView_Previews: PreviewProvider {
         }
     }
 }
-
-
-

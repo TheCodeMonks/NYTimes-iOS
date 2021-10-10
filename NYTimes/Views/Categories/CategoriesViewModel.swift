@@ -11,10 +11,16 @@ import Foundation
 class CategoriesViewModel: ObservableObject {
 
     @Published private(set) var categories: [Category] = Category.allCases {
-        didSet { saveCategories() }
+        didSet {
+            saveCategories()
+            if let method = updateCategories { method(categories) }
+        }
     }
 
-    init() {
+    var updateCategories: (([Category]) -> ())?
+
+    init(_ updateCategories: (([Category]) -> ())? = nil) {
+        self.updateCategories = updateCategories
         if let categories = UserDefaults.standard
             .array(forKey: Constants.UserDefaults.categories) as? [String] {
             self.categories = categories.map({ Category(rawValue: $0)! })

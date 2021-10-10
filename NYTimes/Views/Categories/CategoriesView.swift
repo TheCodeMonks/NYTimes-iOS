@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CategoriesView: View {
 
-    @StateObject private var viewModel = CategoriesViewModel()
+    @StateObject var viewModel: CategoriesViewModel
 
     var body: some View {
         List {
