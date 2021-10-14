@@ -14,7 +14,8 @@ struct RootView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
 
     @State var categories: [Category] = Category.allCases
-
+    @State var searchText = ""
+    
     var initialCategory: Int
     
     @ObservedObject var articlesViewModel = ArticleViewModel()
@@ -33,6 +34,7 @@ struct RootView: View {
     var body: some View {
         NavigationView {
             if networkReachability.isNetworkConnected {
+                
                 ArticleView()
                     .edgesIgnoringSafeArea(.all)
                     .navigationViewStyle(StackNavigationViewStyle())
@@ -87,6 +89,12 @@ struct RootView: View {
     
     fileprivate func ArticleView() -> some View {
         return VStack {
+            
+            TextField("Search", text:$searchText)
+                .padding(7)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            
             NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {}
             NavigationLink(destination: CategoriesView(viewModel: CategoriesViewModel(updateCategories)), isActive: $openCategories) {}
             if articlesViewModel.isArticlesLoading {
