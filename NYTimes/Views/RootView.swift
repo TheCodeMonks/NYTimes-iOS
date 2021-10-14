@@ -14,7 +14,6 @@ struct RootView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
 
     @State var categories: [Category] = Category.allCases
-    @State var searchText = ""
     
     var initialCategory: Int
     
@@ -89,14 +88,11 @@ struct RootView: View {
     
     fileprivate func ArticleView() -> some View {
         return VStack {
-            
-            TextField("Search", text:$searchText)
-                .padding(7)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-            
+             
             NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {}
             NavigationLink(destination: CategoriesView(viewModel: CategoriesViewModel(updateCategories)), isActive: $openCategories) {}
+            
+             
             if articlesViewModel.isArticlesLoading {
                 VStack{
                     Spacer()
@@ -106,9 +102,15 @@ struct RootView: View {
                     Spacer()
                 }
             } else {
+                
                 ArticleListView(articlesViewModel: articlesViewModel, bookmarkViewModel: bookmarkViewModel)
             }
             Spacer()
+            
+            TextField("Search title, subtitle, or author", text: $articlesViewModel.searchText)
+                .padding(7)
+                .cornerRadius(8)
+
             CategorySelector(
                 categories: categories,
                 articleViewModel: articlesViewModel,
@@ -126,7 +128,9 @@ struct ArticleListView: View {
     @ObservedObject var bookmarkViewModel: BookmarkViewModel
     
     var body: some View {
-        List(articlesViewModel.articles, id: \.id){ article in
+        
+        List(articlesViewModel.searchResults, id: \.id){ article in
+            
             NavigationLink(destination: WebViewHolder(url: URL(string: article.url)!, article: article)){
                 NewsFeedView(article: article)
                     .contextMenu(menuItems: {
