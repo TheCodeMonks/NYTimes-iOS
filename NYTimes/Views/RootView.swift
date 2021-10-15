@@ -106,11 +106,19 @@ struct RootView: View {
                 ArticleListView(articlesViewModel: articlesViewModel, bookmarkViewModel: bookmarkViewModel)
             }
             Spacer()
-            
-            TextField("Search title, subtitle, or author", text: $articlesViewModel.searchText)
-                .padding(7)
-                .cornerRadius(8)
-
+           
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                    .frame(width: 10, alignment: .leading)
+                    .padding(.leading, 8)
+                
+                TextField("Search title, subtitle, or author", text: $articlesViewModel.searchText)
+                    .padding(7)
+                    .cornerRadius(8)
+                
+            }
+             
             CategorySelector(
                 categories: categories,
                 articleViewModel: articlesViewModel,

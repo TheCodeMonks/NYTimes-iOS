@@ -22,7 +22,7 @@ class ArticleViewModel: ObservableObject {
         if searchText.isEmpty {
             return articles
         } else {
-            return articles.filter { $0.title.contains(searchText) || $0.subtitle.contains(searchText) || $0.author.contains(searchText) }
+            return articles.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.subtitle.lowercased().contains(searchText.lowercased()) || $0.author.lowercased().contains(searchText.lowercased()) }
         }
     }
     
