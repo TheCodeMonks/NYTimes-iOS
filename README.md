@@ -1,3 +1,5 @@
+## Adding SearchBar 
+
 ![](https://raw.githubusercontent.com/TheCodeMonks/NYTimes-iOS/master/NYTimes%20Screenshots/Banner%400.25x.png)
 ![SwiftUI](https://img.shields.io/badge/Interface-SwfitUI-red)
 ![Architecture](https://img.shields.io/badge/Architecture-MVVM-green)

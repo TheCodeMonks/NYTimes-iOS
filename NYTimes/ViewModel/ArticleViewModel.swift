@@ -15,8 +15,16 @@ class ArticleViewModel: ObservableObject {
     
     @Published var articles = [Article]()
     @Published var isArticlesLoading = false
+    @Published var searchText = ""
     
     var cancellableTask: AnyCancellable? = nil
+    var searchResults : [Article] {
+        if searchText.isEmpty {
+            return articles
+        } else {
+            return articles.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.subtitle.lowercased().contains(searchText.lowercased()) || $0.author.lowercased().contains(searchText.lowercased()) }
+        }
+    }
     
     func loadArticles(for category: Category) {
         guard let url = URL(string: category.url) else { return }
