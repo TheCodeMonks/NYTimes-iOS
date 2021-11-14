@@ -13,18 +13,39 @@ class CategoriesViewModel: ObservableObject {
     @Published private(set) var categories: [Category] = Category.allCases {
         didSet {
             saveCategories()
-            if let method = updateCategories { method(categories) }
         }
     }
+    
+    @Published var selectedCategory: Category = Category.tech
+    
+    @Published var categoriesUnfollowed: [Category] = []
 
-    var updateCategories: (([Category]) -> ())?
-
-    init(_ updateCategories: (([Category]) -> ())? = nil) {
-        self.updateCategories = updateCategories
+    init() {
         if let categories = UserDefaults.standard
             .array(forKey: Constants.UserDefaults.categories) as? [String] {
             self.categories = categories.map({ Category(rawValue: $0)! })
+            updateUnfollowedCategories()
+            selectedCategory = self.categories[0]
         }
+    }
+    
+    func updateUnfollowedCategories() {
+        for category in Category.allCases {
+            if !categories.contains(where: {$0.rawValue == category.rawValue}) {
+                categoriesUnfollowed.append(category)
+            }
+        }
+    }
+    
+    func addCategory(_ category: Category) {
+        categoriesUnfollowed = categoriesUnfollowed.filter {$0.rawValue != category.rawValue}
+        categories.append(category)
+    }
+    
+    func delete(at offsets: IndexSet) {
+        guard let index = offsets.first else { return }
+        categoriesUnfollowed.append(categories[index])
+        categories.remove(atOffsets: offsets)
     }
 
     func move(from source: IndexSet, to destination: Int) {
