@@ -10,34 +10,30 @@ import SwiftUI
 
 struct CategorySelector: View {
     
-    var categories: [Category]
-    var articleViewModel: ArticleViewModel
-    @State var selectedCategory: Int = 0 {
-        didSet {
-            articleViewModel.loadArticles(for: categories[selectedCategory])
-        }
-    }
+    @EnvironmentObject var categoriesViewModel: CategoriesViewModel
+    @EnvironmentObject var articleViewModel: ArticleViewModel
 
     
     var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(0..<categories.count) { index in
+                    ForEach(categoriesViewModel.categories, id: \.rawValue) { category in
                         VStack{
                             Spacer()
                             HStack {
-                                Text(self.categories[index].rawValue)
-                                    .foregroundColor(self.selectedCategory == index ? .white : .init(UIColor.label))
+                                Text(category.rawValue)
+                                    .foregroundColor(categoriesViewModel.selectedCategory == category ? .white : .init(UIColor.label))
                                     .fontWeight(.medium)
                             }
                             .padding(.leading,16)
                             .padding(.trailing,16)
                             Spacer()
                         }
-                        .background(self.selectedCategory == index ? Color.purple : Color("categoryBackground"))
+                        .background(categoriesViewModel.selectedCategory == category ? Color.purple : Color("categoryBackground"))
                             .cornerRadius(10)
                             .onTapGesture {
-                                self.selectedCategory = index
+                                categoriesViewModel.selectedCategory = category
+                                articleViewModel.loadArticles(for: category)
                         }
                     }.padding(.leading,8)
                 }
@@ -54,12 +50,9 @@ struct CategorySelector: View {
 
 struct CategorySelector_Previews: PreviewProvider {
     static var previews: some View {
-        CategorySelector(categories: [
-            Category.science,
-            Category.tech,
-            Category.business
-        ], articleViewModel: ArticleViewModel(),
-                         selectedCategory: 0)
+        CategorySelector()
+            .environmentObject(ArticleViewModel())
+            .environmentObject(CategoriesViewModel())
             .previewDevice(.init("iPhone X"))
             
     }

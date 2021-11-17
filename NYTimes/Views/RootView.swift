@@ -12,22 +12,18 @@ import CoreData
 struct RootView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
-
-    @State var categories: [Category] = Category.allCases
-
-    var initialCategory: Int
     
     @ObservedObject var articlesViewModel = ArticleViewModel()
     @ObservedObject var bookmarkViewModel = BookmarkViewModel()
     @ObservedObject var networkReachability = NetworkReachabilty.shared
+    @ObservedObject var categoriesViewModel = CategoriesViewModel()
 
     @State var shouldShowBookmarks = false
     @State var openCategories = false
     @State var isLoaded = false
 
     init() {
-        initialCategory = 0
-        articlesViewModel.loadArticles(for: categories[initialCategory])
+        articlesViewModel.loadArticles(for: categoriesViewModel.selectedCategory)
     }
     
     var body: some View {
@@ -59,16 +55,8 @@ struct RootView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(650)) {
                 isLoaded = true
             }
-            if let categories = UserDefaults.standard
-                .array(forKey: Constants.UserDefaults.categories) as? [String] {
-                self.categories = categories.map({ Category(rawValue: $0)! })
-            }
-            articlesViewModel.loadArticles(for: categories[initialCategory])
+            articlesViewModel.loadArticles(for: categoriesViewModel.selectedCategory)
         }
-    }
-
-    func updateCategories(_ categories: [Category]) {
-        self.categories = categories
     }
 
     private var categoriesView: some View {
@@ -88,7 +76,7 @@ struct RootView: View {
     fileprivate func ArticleView() -> some View {
         return VStack {
             NavigationLink(destination: BookmarksView(), isActive: $shouldShowBookmarks) {}
-            NavigationLink(destination: CategoriesView(viewModel: CategoriesViewModel(updateCategories)), isActive: $openCategories) {}
+            NavigationLink(destination: CategoriesView().environmentObject(categoriesViewModel), isActive: $openCategories) {}
             if articlesViewModel.isArticlesLoading {
                 VStack{
                     Spacer()
@@ -101,11 +89,10 @@ struct RootView: View {
                 ArticleListView(articlesViewModel: articlesViewModel, bookmarkViewModel: bookmarkViewModel)
             }
             Spacer()
-            CategorySelector(
-                categories: categories,
-                articleViewModel: articlesViewModel,
-                selectedCategory: initialCategory
-            ).frame(height: 100).offset(y: isLoaded ? 0 : 100)
+            CategorySelector()
+                .environmentObject(articlesViewModel)
+                .environmentObject(categoriesViewModel)
+                .frame(height: 100).offset(y: isLoaded ? 0 : 100)
                 .animation(isLoaded ? .spring() : .none)
         }
     }
