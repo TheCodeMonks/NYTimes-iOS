@@ -30,7 +30,7 @@ struct RootView: View {
         NavigationView {
             if networkReachability.isNetworkConnected {
                 ArticleView()
-                    .edgesIgnoringSafeArea(.all)
+                    .edgesIgnoringSafeArea(.bottom)
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarTitle(Text("NYTimes"))
                     .navigationBarItems(
