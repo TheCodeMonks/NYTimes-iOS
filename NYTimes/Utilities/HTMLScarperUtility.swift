@@ -18,13 +18,14 @@ class HTMLScraperUtility {
             var articles = [Article]()
             do {
                 let elements = try SwiftSoup.parse(html, Constants.Endpoints.BASEURL)
-                let documents = try elements.getElementById("stream-panel")?.select("div").select("ol").select("div").select("div").select("a")
+                // last updated: 08-20-2023
+                let documents = try elements.getElementById("stream-panel")?.select("div").select("ol").select("article")
                 documents?.forEach({ (document) in
-                    let imageUrl = try? document.select("div").select("figure").select("div").select("img").attr("src")
-                    let title = try? document.select("h2").text()
+                    let imageUrl = try? document.select("img").attr("src")
+                    let title = try? document.select("h3").text()
                     let subtitle = try? document.select("p").text()
                     let author = try? document.select("div").select("p").select("span").text()
-                    let url = try? document.attr("href")
+                    let url = try? document.select("a").attr("href")
                     
                     if let title = title,
                        let subtitle = subtitle,
@@ -39,6 +40,8 @@ class HTMLScraperUtility {
                         
                         let article = Article(url: "https://www.nytimes.com\(url)", imageUrl: imageUrl, title: title, subtitle: subtitle, author: author)
                         articles.append(article)
+                    } else {
+                        print("parsing error")
                     }
                 })
                 promise(.success(articles))
@@ -49,5 +52,5 @@ class HTMLScraperUtility {
             }
         }
     }
-    
 }
+
